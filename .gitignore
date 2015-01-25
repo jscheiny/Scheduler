@@ -1,4 +1,5 @@
 .DS_Store
 *.sublime-workspace
 build/
+build_tools/build_html.js
 
