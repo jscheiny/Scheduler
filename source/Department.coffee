@@ -1,0 +1,23 @@
+scheduler = (window.scheduler ?= {})
+
+class scheduler.DepartmentModel extends Backbone.Model
+  defaults: ->
+    shortName       : undefined
+    fullName        : undefined
+    academicGroup   : undefined
+    courses         : new scheduler.CourseCollection()
+    coursesByNumber : {}
+
+  addCourse: (course) ->
+    @get('courses').add course
+    @get('coursesByNumber')[course.get('number')] = course
+
+  hasCourse: (courseNumber) ->
+    return @get('coursesByNumber')[courseNumber] != undefined
+
+  getCourse: (courseNumber) ->
+    return @get('coursesByNumber')[courseNumber]
+
+class scheduler.DepartmentCollection extends Backbone.Collection
+  model: scheduler.DepartmentModel
+  comparator: (dept) -> dept.get 'shortName'

@@ -1,0 +1,6 @@
+(function() {
+  if (window.schedules == null) {
+    window.schedules = {};
+  }
+  window.schedules.$name = '$schedule';
+})();
