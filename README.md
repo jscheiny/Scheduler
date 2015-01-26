@@ -71,8 +71,28 @@ When compiled, this will look like:
 <head>
   <script type="text/javascript" src="source/Source1.js"></script>
   <script type="text/javascript" src="source/Source2.js"></script>
-  <script type="text/javascript" src="source/sub1/Source3.js"></script>
-  <script type="text/javascript" src="source/sub1/sub2/Source4.js"></script>
+  <script type="text/javascript" src="source/sub/Source3.js"></script>
+</head>
+<body></body>
+</html>
+```
+
+Note, this is where `dependencies.json` comes into play. If the source folder has a `dependencies.json` which contains:
+
+```json
+{
+  "Source1.coffee": ["Source2.coffee"],
+  "Source2.coffee": ["sub/Source3.coffee"]
+}
+```
+
+Then the resulting html output would instead look like:
+```html
+<html>
+<head>
+  <script type="text/javascript" src="source/sub/Source3.js"></script>
+  <script type="text/javascript" src="source/Source2.js"></script>
+  <script type="text/javascript" src="source/Source1.js"></script>
 </head>
 <body></body>
 </html>
