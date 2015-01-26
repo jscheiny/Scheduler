@@ -38,7 +38,7 @@ module.exports = (grunt) ->
 
       filtered.forEach (filePath) ->
         contents = grunt.file.read filePath
-        {name, compiled} = CSV.compile grunt, filePath, contents
+        {name, compiled} = CSV.compile filePath, contents
         if compiled.length == 0
           grunt.log.warn 'Destination ' + chalk.cyan(destFile) +
             ' not written because source files were empty.'
@@ -142,7 +142,7 @@ getHtmlCompileOptions = (grunt) ->
   return results
 
 CSV =
-  compile: (grunt, path, contents) ->
+  compile: (path, contents) ->
     lastSep = path.lastIndexOf '/'
     baseName = path.substring lastSep + 1
     lastDot = baseName.lastIndexOf '.'
