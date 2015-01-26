@@ -9,6 +9,8 @@
     "grunt-contrib-copy": "^0.7.0",
     "grunt-contrib-handlebars": "^0.9.2",
     "grunt-contrib-less": "^1.0.0",
-    "handlebars": "^2.0.0"
+    "handlebars": "^2.0.0",
+    "lodash": "^3.0.0",
+    "toposort": "^0.2.10"
   }
 }

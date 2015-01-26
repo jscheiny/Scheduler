@@ -1,0 +1,11 @@
+{
+  "backbone.marionette.js": [
+    "backbone.js"
+  ],
+  "backbone.js": [
+    "lodash.js"
+  ],
+  "papaparse.js": [
+    "jquery-1.11.1.min.js"
+  ]
+}

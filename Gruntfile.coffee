@@ -1,5 +1,7 @@
 Handlebars = require 'handlebars'
 chalk      = require 'chalk'
+_          = require 'lodash'
+toposort   = require 'toposort'
 
 module.exports = (grunt) ->
 
@@ -18,7 +20,7 @@ module.exports = (grunt) ->
 
   # Grunt task to compile schedules from CSV files into javascript files to be
   # served to the web app
-  grunt.registerMultiTask 'schedule', 'Compile CSV schedules to javscript', () ->
+  grunt.registerMultiTask 'schedule', 'Compile CSV schedules to javscript', ->
     count = 0
     @files.forEach (fileSet) ->
       destFile = fileSet.dest
@@ -48,7 +50,7 @@ module.exports = (grunt) ->
     grunt.log.ok "#{count} #{grunt.util.pluralize(count, 'file/files')} created."
 
   # Grunt task to compile
-  grunt.registerMultiTask 'html', 'Compile HTML templates', () ->
+  grunt.registerMultiTask 'html', 'Compile HTML templates', ->
     options = getHtmlCompileOptions grunt
     count = 0
     @files.forEach (fileSet) ->
@@ -134,12 +136,54 @@ getHtmlCompileOptions = (grunt) ->
   }, '*'
   results = {}
   directories.forEach (dir) ->
-    options =
-      cwd      : 'build/' + dir
-      filter   : 'isFile'
-      baseName : true
-    results[dir] = grunt.file.expand(options, '**').map (path) -> dir + '/' + path
+    results[dir] = getSortedSourceFiles grunt, dir
   return results
+
+endsWith = (base, suffix) ->
+  return base.indexOf(suffix, base.length - suffix.length) != -1;
+
+getSortedSourceFiles = (grunt, dir) ->
+  options =
+    cwd      : 'build/' + dir
+    filter   : 'isFile'
+    baseName : true
+  files = grunt.file.expand(options, '**').map (path) -> dir + '/' + path
+  options =
+    cwd      : dir
+    filter   : 'isFile'
+  depFiles = grunt.file.expand options, "dependencies.json"
+  if _.isEmpty depFiles
+    return files
+  depsFilePath = dir + '/' + depFiles[0]
+  depsJson = grunt.file.readJSON depsFilePath
+  edges = parseDependencies grunt, dir, depsFilePath, depsJson, files
+  sorted = toposort(edges).reverse()
+  sorted = sorted.concat _.difference(files, sorted)
+  return sorted
+
+parseDependencies = (grunt, dir, filePath, json, files) ->
+  applyDir = (path) -> dir + '/' + path
+  edges = []
+  grunt.fail.warn("Dependencies #{filePath} file malformed.") unless _.isObject json
+  for key, value of json
+    key = applyDir key
+    if _.isArray value
+      deps = value.map applyDir
+    else if _.isString value
+      deps = [applyDir value]
+    else
+      grunt.fail.warn "Bad data type for #{key} dependency."
+    if key not in files
+      grunt.fail.warn "Unknown dependency file: #{key}."
+    unknowns = _.difference deps, files
+    if unknowns.length isnt 0
+      grunt.fail.warn "Unknown dependencies: #{unknowns.join ' '}"
+    for dep in deps
+      edges.push [key, dep]
+  return edges
+
+Handlebars.registerHelper 'script', (src) ->
+  new Handlebars.SafeString '<script type="text/javascript" src="' + src + '"></script>'
 
 CSV =
   compile: (path, contents) ->

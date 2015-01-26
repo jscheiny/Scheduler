@@ -5,20 +5,17 @@
   {{#each styles}}
   <link rel="stylesheet" type="text/css" href="{{this}}">
   {{/each}}
-  <script type="text/javascript" src="external/jquery-1.11.1.min.js"></script>
-  <script type="text/javascript" src="external/lodash.js"></script>
-  <script type="text/javascript" src="external/papaparse.js"></script>
-  <script type="text/javascript" src="external/handlebars-v2.0.0.js"></script>
-  <script type="text/javascript" src="external/backbone.js"></script>
-  <script type="text/javascript" src="external/backbone.marionette.js"></script>
+  {{#each external}}
+  {{script this}}
+  {{/each}}
   {{#each schedules}}
-  <script type="text/javascript" src="{{this}}"></script>
+  {{script this}}
   {{/each}}
   {{#each templates}}
-  <script type="text/javascript" src="{{this}}"></script>
+  {{script this}}
   {{/each}}
   {{#each source}}
-  <script type="text/javascript" src="{{this}}"></script>
+  {{script this}}
   {{/each}}
 </head>
 <body>
