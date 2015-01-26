@@ -5,7 +5,7 @@
       "follow_symlinks": true,
       "path": ".",
       "folder_exclude_patterns": ["build", "external", "node_modules"],
-      "file_exclude_patterns": ["*.js"]
+      "file_exclude_patterns": ["*.js", ".sublime-grunt.cache"]
     }
   ],
   "settings":
