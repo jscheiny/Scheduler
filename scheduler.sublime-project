@@ -4,7 +4,7 @@
     {
       "follow_symlinks": true,
       "path": ".",
-      "folder_exclude_patterns": ["build", "external"],
+      "folder_exclude_patterns": ["build", "external", "node_modules"],
       "file_exclude_patterns": ["*.js"]
     }
   ],
@@ -12,13 +12,5 @@
   {
     "detect_indentation": false,
     "tab_size": 2
-  },
-  "build_systems":
-  [
-    {
-      "name": "Web Build",
-      "cmd": ["zsh", "build.sh"],
-      "working_dir": "/Users/jonah/Dropbox/Development/Javascript/Scheduler"
-    }
-  ]
+  }
 }

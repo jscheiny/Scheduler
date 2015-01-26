@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  {{#each styles}}
+  <link rel="stylesheet" type="text/css" href="{{this}}">
+  {{/each}}
+  <script type="text/javascript" src="external/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="external/lodash.js"></script>
+  <script type="text/javascript" src="external/papaparse.js"></script>
+  <script type="text/javascript" src="external/handlebars-v2.0.0.js"></script>
+  <script type="text/javascript" src="external/backbone.js"></script>
+  <script type="text/javascript" src="external/backbone.marionette.js"></script>
+  {{#each schedules}}
+  <script type="text/javascript" src="{{this}}"></script>
+  {{/each}}
+  {{#each templates}}
+  <script type="text/javascript" src="{{this}}"></script>
+  {{/each}}
+  {{#each source}}
+  <script type="text/javascript" src="{{this}}"></script>
+  {{/each}}
+</head>
+<body>
+
+</body>
+</html>

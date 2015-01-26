@@ -1,5 +1,5 @@
 .DS_Store
 *.sublime-workspace
 build/
-build_tools/build_html.js
-
+node_modules/
+.sublime-grunt.cache

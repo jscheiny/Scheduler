@@ -3,7 +3,7 @@ catalog = (scheduler.catalog ?= {})
 
 class catalog.SemesterView extends Backbone.Marionette.LayoutView
   el        : 'body'
-  template  : Handlebars.templates['SemesterView']
+  template  : scheduler.templates['catalog.SemesterView']
   className : 'semester'
 
   regions:
@@ -14,4 +14,4 @@ class catalog.SemesterView extends Backbone.Marionette.LayoutView
       collection: @model.get('departments')
 
 class DepartmentListView extends Backbone.Marionette.CollectionView
-  childView : scheduler.DepartmentView
+  childView : catalog.DepartmentView

@@ -2,7 +2,7 @@ scheduler = (window.scheduler ?= {})
 catalog = (scheduler.catalog ?= {})
 
 class catalog.DepartmentView extends Backbone.Marionette.LayoutView
-  template  : Handlebars.templates['DepartmentView']
+  template  : scheduler.templates['catalog.DepartmentView']
   tagName   : 'li'
   className : 'department'
 
@@ -14,4 +14,4 @@ class catalog.DepartmentView extends Backbone.Marionette.LayoutView
       collection: @model.get('courses')
 
 class CourseListView extends Backbone.Marionette.CollectionView
-  childView : scheduler.CourseView
+  childView : catalog.CourseView
