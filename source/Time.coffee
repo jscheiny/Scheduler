@@ -52,16 +52,16 @@ class scheduler.Interval
   # endpoints are equal. For example, 3-4PM hard overlaps 4-5PM.
   hardOverlaps: (interval) ->
     if @start.lt interval.start
-      return @end.lte interval.start
-    return @start.gte interval.end
+      return @end.gte interval.start
+    return @start.lte interval.end
 
   # This interval soft overlaps another interval if they don't overlap except for
   # sharing a common end point. For example, 3-4PM doesn't soft overlap 4-5PM
   # but 3-4PM soft overlaps 3:30-5PM.
   softOverlaps: (interval) ->
     if @start.lt interval.start
-      return @end.lt interval.start
-    return @start.gt interval.end
+      return @end.gt interval.start
+    return @start.lt interval.end
 
   toString: ->
     return "#{@start.toString()} - #{@end.toString()}"

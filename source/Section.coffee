@@ -57,7 +57,11 @@ class scheduler.Section extends Backbone.Model
   toString: ->
     @get('type') + ' ' + @get('number')
 
+  hardOverlaps: (section) ->
+    @get('time').hardOverlaps section.get('time')
 
+  softOverlaps: (section) ->
+    @get('time').softOverlaps section.get('time')
 
 class scheduler.SectionCollection extends Backbone.Collection
   model: scheduler.Section
