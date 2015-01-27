@@ -1,6 +1,6 @@
 scheduler = (window.scheduler ?= {})
 
-class scheduler.SemesterModel extends Backbone.Model
+class scheduler.Semester extends Backbone.Model
   defaults: ->
     name        : undefined
     departments : new scheduler.DepartmentCollection()
@@ -9,7 +9,7 @@ class scheduler.SemesterModel extends Backbone.Model
   @FromCSV: (name, csv) ->
     start = new Date()
     parsed = Papa.parse csv, {header: true}
-    semester = new scheduler.SemesterModel {name, parsed}
+    semester = new scheduler.Semester {name, parsed}
     end = new Date()
     elapsed = (end.getTime() - start.getTime()) / 1000
     console.debug "Time to model semester: #{elapsed}s"
@@ -43,9 +43,9 @@ class scheduler.SemesterModel extends Backbone.Model
     if department.hasCourse number
       course = department.getCourse number
     else
-      course = new scheduler.CourseModel {department, number, title, credits}
+      course = new scheduler.Course {department, number, title, credits}
     department.addCourse course
-    course.addSection scheduler.SectionModel.FromRow course, row
+    course.addSection scheduler.Section.FromRow course, row
 
   _parseDepartment: (row) ->
     combinedName = row.Subject.trim()
@@ -58,7 +58,7 @@ class scheduler.SemesterModel extends Backbone.Model
     if findDept?
       return findDept
     else
-      dept = new scheduler.DepartmentModel {shortName, fullName, academicGroup}
+      dept = new scheduler.Department {shortName, fullName, academicGroup}
       @_addDepartment dept
       return dept
 

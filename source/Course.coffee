@@ -1,6 +1,6 @@
 scheduler = (window.scheduler ?= {})
 
-class scheduler.CourseModel extends Backbone.Model
+class scheduler.Course extends Backbone.Model
   defaults: ->
     department : undefined
     number     : undefined
@@ -18,5 +18,5 @@ class scheduler.CourseModel extends Backbone.Model
            @get('title')
 
 class scheduler.CourseCollection extends Backbone.Collection
-  model: scheduler.CourseModel
+  model: scheduler.Course
   comparator: (course) -> course.get 'number'

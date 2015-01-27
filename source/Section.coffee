@@ -23,7 +23,7 @@ DAY_ABBREVS = [
   'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'
 ]
 
-class scheduler.SectionModel extends Backbone.Model
+class scheduler.Section extends Backbone.Model
   defaults:
     course     : undefined
     number     : undefined
@@ -40,7 +40,7 @@ class scheduler.SectionModel extends Backbone.Model
     instructor = row.instructor
     meetings = ['M', 'T', 'W', 'TH', 'F', 'S', 'SU'].map (day) -> !!row[day]
     time = parseTimeInterval row.Time
-    return new scheduler.SectionModel {
+    return new scheduler.Section {
       number, type, location, instructor, meetings, time
     }
 
@@ -60,5 +60,5 @@ class scheduler.SectionModel extends Backbone.Model
 
 
 class scheduler.SectionCollection extends Backbone.Collection
-  model: scheduler.SectionModel
+  model: scheduler.Section
   comparator: (section) -> section.get 'number'

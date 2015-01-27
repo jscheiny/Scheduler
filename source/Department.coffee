@@ -1,6 +1,6 @@
 scheduler = (window.scheduler ?= {})
 
-class scheduler.DepartmentModel extends Backbone.Model
+class scheduler.Department extends Backbone.Model
   defaults: ->
     shortName       : undefined
     fullName        : undefined
@@ -21,5 +21,5 @@ class scheduler.DepartmentModel extends Backbone.Model
   toString: -> @get 'shortName'
 
 class scheduler.DepartmentCollection extends Backbone.Collection
-  model: scheduler.DepartmentModel
+  model: scheduler.Department
   comparator: (dept) -> dept.get 'shortName'
