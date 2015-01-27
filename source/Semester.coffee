@@ -14,6 +14,8 @@ class scheduler.SemesterModel extends Backbone.Model
         @_parseRow row
 
   _parseRow: (row) ->
+    if row.Time == 'ARR'
+      return
     department = @_parseDepartment row
     number = row['Catalog Nbr'].trim()
     title = row['Course Title'].trim()
