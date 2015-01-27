@@ -6,6 +6,15 @@ class scheduler.SemesterModel extends Backbone.Model
     departments : new scheduler.DepartmentCollection()
     deptByShort : {}
 
+  @FromCSV: (name, csv) ->
+    start = new Date()
+    parsed = Papa.parse csv, {header: true}
+    semester = new scheduler.SemesterModel {name, parsed}
+    end = new Date()
+    elapsed = (end.getTime() - start.getTime()) / 1000
+    console.debug "Time to model semester: #{elapsed}s"
+    return semester
+
   initialize: (options) ->
     {parsed} = options
     errorIndices = _.pluck(parsed.errors, 'row')
