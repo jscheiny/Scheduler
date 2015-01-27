@@ -64,5 +64,5 @@ class scheduler.Interval
     return @start.gt interval.end
 
   toString: ->
-    return "#{@start.toString()} - #{end.toString()}"
+    return "#{@start.toString()} - #{@end.toString()}"
 
