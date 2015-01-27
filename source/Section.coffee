@@ -1,8 +1,6 @@
 scheduler = (window.scheduler ?= {})
 
 parseNumber = (value) -> if value? then +value else 0
-pad = (value) -> if value < 10 then "0" + value else "" + value
-am_pm = (isMorning) -> if isMorning then "am" else "pm"
 
 parseTimeInterval = (time) ->
   timeRegex = /^(\d{1,2})(\d{2})?-(\d{1,2})(\d{2})?((AM)|(PM))$/g
@@ -21,6 +19,10 @@ parseTimeInterval = (time) ->
   endTime = new scheduler.Time endHour, endMinute
   return new scheduler.Interval startTime, endTime
 
+DAY_ABBREVS = [
+  'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'
+]
+
 class scheduler.SectionModel extends Backbone.Model
   defaults:
     course     : undefined
@@ -31,7 +33,7 @@ class scheduler.SectionModel extends Backbone.Model
     meetings   : undefined
     time       : undefined
 
-  @Create: (course, row) ->
+  @FromRow: (course, row) ->
     number = row.Section
     type = row.Component
     location = row.Location
@@ -41,6 +43,21 @@ class scheduler.SectionModel extends Backbone.Model
     return new scheduler.SectionModel {
       number, type, location, instructor, meetings, time
     }
+
+  getMeetingDaysString: ->
+    _(DAY_ABBREVS).zip @get 'meetings'
+      .filter ([abbrev, meeting]) -> meeting
+      .map ([abbrev, meeting]) -> abbrev
+      .value()
+      .join ''
+
+  getMeetingTimesString: ->
+    @getMeetingDaysString() + ' ' + @get('time').toString()
+
+  toString: ->
+    @get('type') + ' ' + @get('number')
+
+
 
 class scheduler.SectionCollection extends Backbone.Collection
   model: scheduler.SectionModel

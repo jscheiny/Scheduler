@@ -13,6 +13,17 @@ class scheduler.SemesterModel extends Backbone.Model
       if index not in errorIndices
         @_parseRow row
 
+  getDepartment: (shortName) ->
+    return @get('deptByShort')[shortName]
+
+  lookUpCourse: (desc) ->
+    parts = desc.split(/\s+/)
+    return undefined if parts.length != 2
+    [name, number] = parts
+    dept = @getDepartment name
+    return undefined unless dept?
+    return dept.getCourse number
+
   _parseRow: (row) ->
     if row.Time == 'ARR'
       return
@@ -25,7 +36,7 @@ class scheduler.SemesterModel extends Backbone.Model
     else
       course = new scheduler.CourseModel {department, number, title, credits}
     department.addCourse course
-    course.addSection scheduler.SectionModel.Create(course, row)
+    course.addSection scheduler.SectionModel.FromRow course, row
 
   _parseDepartment: (row) ->
     combinedName = row.Subject.trim()

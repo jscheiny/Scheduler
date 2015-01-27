@@ -13,6 +13,10 @@ class scheduler.CourseModel extends Backbone.Model
     @get('sections').add section
     @get('sectionsByNumber')[section.get('number')] = section
 
+  toString: ->
+    return @get('department').get('shortName') + ' ' + @get('number') + ' - ' +
+           @get('title')
+
 class scheduler.CourseCollection extends Backbone.Collection
   model: scheduler.CourseModel
   comparator: (course) -> course.get 'number'

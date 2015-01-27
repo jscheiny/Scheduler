@@ -18,6 +18,8 @@ class scheduler.DepartmentModel extends Backbone.Model
   getCourse: (courseNumber) ->
     return @get('coursesByNumber')[courseNumber]
 
+  toString: -> @get 'shortName'
+
 class scheduler.DepartmentCollection extends Backbone.Collection
   model: scheduler.DepartmentModel
   comparator: (dept) -> dept.get 'shortName'
